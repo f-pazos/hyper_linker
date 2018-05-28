@@ -1,9 +1,33 @@
+body{
+	min-width:600px;
+}
+
 #img_select{
     float: left;
     width: 30%;
     background-color: blue;
 }
 
+#img_display{
+    border: thin solid black;
+}
+
+div.im_box{
+    display: inline-block;
+    border: solid green;
+    background-color: green;
+    height: 100px;
+    width: 200px;
+}
+
+img.im_box{
+    width: 100%;
+    height: 100%;
+}
+
+
 #text{
+    display:block;
     background-color: red;
+    
 }
