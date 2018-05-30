@@ -8,8 +8,8 @@ var img_info = new Map();
 // Note, [image_index] always points to the next spot in imgs. 
 var image_index = 0; 
 
-// Checks whether or not an image exists at [url]. If yes, calls [f]. 
-function img_exists ( url , f){
+// Checks whether or not an image exists at [url]. If yes, calls [f(url)]. 
+function img_exists ( url , f ){
 	var img = new Image();
 
 	img.onload = function() { f(url) };
@@ -18,11 +18,10 @@ function img_exists ( url , f){
 	img.src = url;
 }
 
-
-
 $(document).ready(function() {
 
-    //Whenever the link input changes, check to see if the text leads to a valid image link. 
+    //Whenever the link input changes, check to see if the text leads to a valid
+    //image link. 
     $("#link_input").bind("input", function(){
 	    var fr = new FileReader();
 	    var link = $("#link_input").val();
@@ -31,8 +30,7 @@ $(document).ready(function() {
 	    img_exists( link, function (url){
 
 		    //Create a div and add an image. 
-		    $("#img_display").append("<div class=\"im_box\" id=\"box_" + image_index + 
-			    "\"></div>");
+		    $("#img_display").append("<div class=\"im_box\" id=\"box_" + image_index + "\"></div>");
 		    $("#box_"+image_index).append("<img class=\"im_box\" id=\"img_" + image_index + "\" src=\"" + url + "\"hidden></img>");
 
 		    //TODO: Make resizing more flexible. 
@@ -52,7 +50,6 @@ $(document).ready(function() {
 			    //Clear the text field.
 			    $("#link_input").val("");
 
-
 			    //Object to maintain important info about each image box. 
 			    var inf = {
 				    //DOM elements associated with this image. 
@@ -70,15 +67,9 @@ $(document).ready(function() {
 			    //Update the map so we have all the data we need. 
 			    img_info.set( image_index, inf );
 
-			    console.log( img_info );
 			    image_index++;
-		    });
-
-		    
-	    });
-
-
-	    
+		    }); 
+	    }); 
     });
 
 
@@ -103,6 +94,9 @@ $(document).ready(function() {
     });
 
 
+    $("#text_input").bind("input", function() {
+        $("#text_output").text( $("#text_input").val());
+    });
 });
 
 
