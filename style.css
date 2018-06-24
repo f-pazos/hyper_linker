@@ -28,6 +28,11 @@ img.im_box{
 
 #text{
     display:block;
-    background-color: red;
-    
+    background-color: red;    
 }
+
+#text_input{
+    width:70%;
+    box-sizing: border-box;
+}
+

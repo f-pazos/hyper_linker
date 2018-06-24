@@ -20,9 +20,8 @@ var high_id = null;
 /** </Global Variables > *****************************************************/
 
 /** < Helper Functions > *****************************************************/
-
-// Checks whether or not an image exists at [url]. If yes, calls [f]. 
-function img_exists ( url , f){
+// Checks whether or not an image exists at [url]. If yes, calls [f(url)]. 
+function img_exists ( url , f ){
 	var img = new Image();
 
 	img.onload = function() { f(url) };
@@ -30,7 +29,6 @@ function img_exists ( url , f){
 
 	img.src = url;
 }
-
 /** </Helper Functions > *****************************************************/
 
 /** <Main JQuery> ************************************************************/
@@ -50,8 +48,7 @@ $(document).ready(function() {
 	    img_exists( link, function (url){
 
 		    //Create a div and add an image. 
-		    $("#img_display").append("<div class=\"im_box\" id=\"box_" + image_index + 
-			    "\"></div>");
+		    $("#img_display").append("<div class=\"im_box\" id=\"box_" + image_index + "\"></div>");
 		    $("#box_"+image_index).append("<img class=\"im_box\" id=\"img_" + image_index + "\" src=\"" + url + "\"hidden></img>");
 
 		    //TODO: Make resizing more flexible. 
@@ -71,7 +68,6 @@ $(document).ready(function() {
 			    //Clear the text field.
 			    $("#link_input").val("");
 
-
 			    //Object to maintain important info about each image box. 
 			    var inf = {
 				    //DOM element IDs associated with this image. 
@@ -90,9 +86,7 @@ $(document).ready(function() {
 			    img_info.set( image_index, inf );
                 id_index.set( "box_" + image_index , image_index );
 
-			    console.log( img_info );
 			    image_index++;
-		    });  
 	    }); 
     });
 
@@ -117,6 +111,7 @@ $(document).ready(function() {
 		alert( "Sorry, file upload is not currently supported for this browser." );
 	}
     });
+    });
 });
 
 
@@ -134,11 +129,13 @@ $(document).ready( function() {
         //Highlight the new image. 
         $("#box_" + i).css( "border", "1px solid red" );
         high_id = "#box_" + i;
-
-
-
-
     });
 });
 
 
+/** GRAND TODO
+ * <MINOR> 
+ * TODO on page load background is red. 
+ * <MEDIUMS>
+ * <HARDS>
+ */
