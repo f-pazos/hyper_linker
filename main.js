@@ -3,10 +3,23 @@
 
 'use strict';
 
+/** < Global Variables > *****************************************************/
+
+// [img_info] maintains a map from an image's index to information about said image. 
 var img_info = new Map(); 
 
-// Note, [image_index] always points to the next spot in imgs. 
+// [id_index] Gives the image index for a give id. 
+var id_index = new Map();
+
+// [image_index] Clean index that we can add an image to in [img_info]
 var image_index = 0; 
+
+// [high_id] The index of the DOM element that is currently highlighted.
+var high_id = null;
+
+/** </Global Variables > *****************************************************/
+
+/** < Helper Functions > *****************************************************/
 
 // Checks whether or not an image exists at [url]. If yes, calls [f]. 
 function img_exists ( url , f){
@@ -18,10 +31,16 @@ function img_exists ( url , f){
 	img.src = url;
 }
 
+/** </Helper Functions > *****************************************************/
 
+/** <Main JQuery> ************************************************************/
 
+/** Handle link input changes. 
+ *  1) Check to see if link leads to valid link. 
+ *  2) If yes, load image and add it to the displayed images.
+ *  3) Maintain information in [img_info] object. 
+ */
 $(document).ready(function() {
-
     //Whenever the link input changes, check to see if the text leads to a valid image link. 
     $("#link_input").bind("input", function(){
 	    var fr = new FileReader();
@@ -55,7 +74,7 @@ $(document).ready(function() {
 
 			    //Object to maintain important info about each image box. 
 			    var inf = {
-				    //DOM elements associated with this image. 
+				    //DOM element IDs associated with this image. 
 				    box: $("box_" + image_index),
 				    img: $("img_" + image_index),
 
@@ -69,19 +88,16 @@ $(document).ready(function() {
 				    url: url};
 			    //Update the map so we have all the data we need. 
 			    img_info.set( image_index, inf );
+                id_index.set( "box_" + image_index , image_index );
 
 			    console.log( img_info );
 			    image_index++;
-		    });
-
-		    
-	    });
-
-
-	    
+		    });  
+	    }); 
     });
 
 
+    //TODO implement file uploads (maybe?)
     //Whenever someone uploads a file, use it in links.
     $("#file_input").change( function(){
         if ( FileReader ){
@@ -101,8 +117,28 @@ $(document).ready(function() {
 		alert( "Sorry, file upload is not currently supported for this browser." );
 	}
     });
+});
 
 
+/** Handle Mouse Highlighting on img_div click. **/
+$(document).ready( function() {
+    $("body").on('click', "div.im_box", function(){
+
+        //Reset the old high light. 
+        $(high_id).css( "border", "solid green" );
+
+        //Get the image index for the clicked image
+        var i = id_index.get( $(this).attr( "id" ));
+        console.log( i );
+
+        //Highlight the new image. 
+        $("#box_" + i).css( "border", "1px solid red" );
+        high_id = "#box_" + i;
+
+
+
+
+    });
 });
 
 
